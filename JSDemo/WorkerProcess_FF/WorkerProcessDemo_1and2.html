@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+ <html>
+ <body>
+ 
+<p>Web Worker 1: <output id="result1"></output></p>
+<p>Web Worker 2: <output id="result2"></output></p>
+
+<button onclick="startWorker1()">Start Worker 1</button> 
+<button onclick="startWorker2()">Start Worker 2</button> 
+<button onclick="stopWorker1()">Stop Worker 1</button>
+<button onclick="stopWorker2()">Stop Worker 2</button>
+
+<br><br>
+ 
+<script>
+var w1;
+var w2;
+ 
+
+function startWorker1()
+ {
+ if(typeof(Worker)!=="undefined")
+ {
+   if(typeof(w1)=="undefined")
+     {
+     w1=new Worker("WorkerProc1.js");
+     }
+   w1.onmessage = function (event) {
+     document.getElementById("result1").innerHTML=event.data;
+   };
+ }
+ else
+ {
+ document.getElementById("result1").innerHTML="This browser does not support Web Workers.";
+ }
+
+}
+
+
+
+function startWorker2()
+ {
+ if(typeof(Worker)!=="undefined")
+ {
+   if(typeof(w2)=="undefined")
+     {
+     w2=new Worker("WorkerProc2.js");
+     }
+   w2.onmessage = function (event) {
+     document.getElementById("result2").innerHTML=event.data;
+   };
+ }
+ else
+ {
+ document.getElementById("result2").innerHTML="This browser does not support Web Workers.";
+ }
+
+}
+
+
+
+function stopWorker1()
+ { 
+    w1.terminate();
+    w1 = undefined;  //Can reuse the code if set to undefined after terminate()
+ }
+
+ 
+
+function stopWorker2()
+ { 
+    w2.terminate();
+    w2 = undefined;  //Can reuse the code if set to undefined after terminate()
+ }
+
+</script>
+ 
+</body>
+</html>

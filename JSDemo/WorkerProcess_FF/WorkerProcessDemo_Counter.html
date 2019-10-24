@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+ <html>
+ <body>
+ 
+<p>Status: <output id="result"></output></p>
+
+<button onclick="startWorker()">Start Worker</button> 
+<button onclick="stopWorker()">Stop Worker</button>
+
+<br><br>
+ 
+<script>
+var w;
+
+
+
+function startWorker()
+ {
+try {
+     if(typeof(Worker)!=="undefined")
+     {
+       if(typeof(w)=="undefined")
+         {
+            var counter = 1;
+
+            while (true)
+             {
+                  w=new Worker("WorkerProc1.js");
+                  document.write(" Spawned " + counter);
+                  counter++;
+             }
+         }          
+     }
+    }
+catch(ex)
+{
+document.write(" Exception Occured");
+}
+}
+
+
+
+ 
+function startWorker_Orig()
+ {
+     if(typeof(Worker)!=="undefined")
+     {
+       if(typeof(w)=="undefined")
+         {
+         w=new Worker("WorkerProc1.js");
+         }
+       w.onmessage = function (event) {
+         document.getElementById("result").innerHTML=event.data;
+       };
+     }
+     else
+     {
+     document.getElementById("result").innerHTML="This browser does not support Web Workers.";
+     }
+}
+ 
+
+function stopWorker()
+   {
+    w.terminate();
+    w = undefined;  //Can reuse the code if set to undefined after terminate()
+   }
+
+</script>
+ 
+</body>
+</html>

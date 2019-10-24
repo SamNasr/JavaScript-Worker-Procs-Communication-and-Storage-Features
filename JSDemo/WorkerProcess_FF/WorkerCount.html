@@ -1,0 +1,28 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var count = 0;
+        function spawn() {
+         while(true)
+          {
+            var worker = new Worker('worker.js');
+            ++count;
+            document.getElementById('log').innerHTML += 'Running ' + count + '<br/>';
+            worker.onmessage = function(event) {
+                document.getElementById('log').innerHTML += 'Finished ' + event.data + '<br/>';
+                worker.terminate(); // this doesn't prevent a leak
+            };
+            worker.postMessage(count);
+            worker.postMessage('end'); // this doesn't prevent a leak
+            
+            //yield;
+          }
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="spawn();">Work!</button>
+    <p id="log"></p>
+</body>
+</html>

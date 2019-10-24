@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Modernizr Demo</title>
+<script src="../scripts/modernizr-2.5.3.js"></script>
+<style>
+body
+{
+    font-size: 24pt;
+}
+</style>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<script>
+document.write("The CANVAS feature is ");
+if (!Modernizr.canvas){
+	document.write("NOT ");}
+document.write("supported in this browser.");
+document.write("<br/>");
+
+document.write("The LOCALSTORAGE feature is ");
+if (!Modernizr.localstorage){
+	document.write("NOT ");}
+document.write("supported in this browser.");
+document.write("<br/>");
+
+document.write("The AUDIO feature is ");
+if (!Modernizr.audio){
+	document.write("NOT ");}
+document.write("supported in this browser.");
+document.write("<br/>");
+
+document.write("The GEOLOCATION feature is ");
+if (!Modernizr.geolocation){
+	document.write("NOT ");}
+document.write("supported in this browser.");
+document.write("<br/>");
+
+document.write("The CSSGRADIENTS feature is ");
+if (!Modernizr.cssgradients) {
+    document.write("NOT ");
+}
+document.write("supported in this browser.");
+document.write("<br/>");
+
+</script>
+</body>
+</html>
+

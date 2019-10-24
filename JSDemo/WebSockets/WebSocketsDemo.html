@@ -1,0 +1,76 @@
+<!DOCTYPE html>  
+<meta charset="utf-8" />  
+
+<html>
+<body>
+<title>WebSocket Demo</title>  
+<h2>WebSocket Demo</h2>  
+
+<button onclick="OpenConnection()">Open Connection</button> 
+<button onclick="SendMessage()">Send Message</button>
+<button onclick="CloseConnection()">Close Connection</button>
+
+<script language="javascript" type="text/javascript">  
+var wsUri = "ws://echo.websocket.org/"; 
+var wssUri = "wss://echo.websocket.org";
+var output;  
+
+
+function onOpen(evt) { writeToScreen("CONNECTED"); }  
+function onClose(evt) { writeToScreen("DISCONNECTED"); }  
+function onError(evt) { writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); }  
+function doSend(message) { writeToScreen("SENT: " + message);  websocket.send(message); }  
+
+
+function onMessage(evt) 
+{ 
+  writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');  
+}  
+
+
+function writeToScreen(message) 
+{ 
+  var pre = document.createElement("p"); 
+  pre.style.wordWrap = "break-word"; 
+  pre.innerHTML = message; 
+  output.appendChild(pre); 
+}  
+
+
+function OpenConnection()
+{ 
+  output = document.getElementById("output"); 
+  websocket = new WebSocket(wsUri); 
+  websocket.onopen = function(evt) { onOpen(evt) }; 
+  websocket.onclose = function(evt) { onClose(evt) }; 
+  websocket.onmessage = function(evt) { onMessage(evt) }; 
+  websocket.onerror = function(evt) { onError(evt) }; 
+}  
+
+
+function SendMessage()
+{
+  var currentdate = new Date(); 
+  var datetime = "Current Date/Time: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+  doSend(datetime);
+}
+
+
+function CloseConnection()
+{
+  websocket.close();
+}
+
+</script>  
+
+
+<div id="output"></div>  
+
+</body>
+</html>
